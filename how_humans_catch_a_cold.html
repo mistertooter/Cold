@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Humans Catch a Cold — Animated Explainer</title>
+<style>
+  :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,Arial,sans-serif;background:#081827}
+  *{box-sizing:border-box} body{margin:0;min-height:100vh;display:grid;place-items:center;padding:12px}
+  .poster{width:min(100%,750px);aspect-ratio:3/4;position:relative;overflow:hidden;border-radius:24px;background:radial-gradient(circle at 57% 40%,#1c5270 0%,#102f4b 43%,#071522 85%);box-shadow:0 25px 90px #0009;border:1px solid #6ce5f744;color:#f3fcff}
+  .poster:before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 98%,#9bdeec10 99%),linear-gradient(90deg,transparent 98%,#9bdeec10 99%);background-size:34px 34px;mask-image:linear-gradient(#0008,transparent 65%);pointer-events:none}
+  header{position:absolute;top:3.5%;left:6%;right:6%;z-index:4}
+  .eyebrow{color:#7fe9f3;letter-spacing:.22em;font-size:clamp(9px,1.6vw,13px);font-weight:800}
+  h1{font-size:clamp(26px,5vw,45px);line-height:1.04;margin:.2em 0;color:#fff;letter-spacing:-.045em}
+  header p{font-size:clamp(11px,1.65vw,15px);color:#a9d6e6;margin:0}
+  svg{position:absolute;inset:12% 0 23%;width:100%;height:65%;overflow:visible}
+  .skin{fill:url(#skin);stroke:#ffbd9f;stroke-width:3;filter:url(#shadow)}
+  .airway{fill:#5c1f37;stroke:#ff9d8f;stroke-width:5}
+  .mucosa{fill:none;stroke:#ff847e;stroke-width:13;stroke-linecap:round;opacity:.75}
+  .cell{fill:url(#cell);stroke:#ffb4b5;stroke-width:2.4}
+  .cilia{stroke:#ffb6aa;stroke-width:2;fill:none;stroke-linecap:round;opacity:.65}
+  .virus{filter:url(#glow);transform-box:fill-box;transform-origin:center}
+  .virus circle.core{fill:#f864b7;stroke:#ffc0e6;stroke-width:2}
+  .virus line{stroke:#f779c0;stroke-width:3;stroke-linecap:round}
+  .virus circle.tip{fill:#ffb9df}
+  .immune{filter:url(#blueGlow)}
+  .immune circle{fill:#68dff2;stroke:#e4ffff;stroke-width:3}
+  .immune path{stroke:#c4fcff;fill:none;stroke-width:2.5;stroke-linecap:round}
+  #particles{pointer-events:none}
+  .label{font-size:17px;font-weight:800;fill:#eaffff;paint-order:stroke;stroke:#113047;stroke-width:4}
+  .hint{font-size:13px;fill:#add9e8;paint-order:stroke;stroke:#113047;stroke-width:3}
+  .leader{fill:none;stroke:#7de9ee;stroke-width:2;stroke-dasharray:5 5;opacity:.75}
+  .focus{opacity:.12;transition:opacity .5s,filter .5s}.focus.active{opacity:1}
+  .halo{fill:none;stroke:#ffcf73;stroke-width:3;stroke-dasharray:8 8;opacity:0;transition:opacity .4s}
+  .halo.active{opacity:.9;animation:dash 6s linear infinite}
+  @keyframes dash{to{stroke-dashoffset:-140}}
+  .stagebar{position:absolute;left:5%;right:5%;bottom:17%;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;z-index:5}
+  .stagebar button{font-family:inherit;font-size:clamp(10px,1.6vw,14px);font-weight:700;line-height:1.15;color:#bad6e1;background:#123349c9;border:1px solid #5ca6b866;border-radius:12px;padding:11px 4px;cursor:pointer;min-height:44px}
+  .stagebar button.active{color:#102431;background:#93f2ec;border-color:#c7fffa;box-shadow:0 0 16px #75ebe57a}
+  .info{position:absolute;bottom:2%;left:5%;right:5%;height:13%;padding:12px 17px;border-radius:16px;background:linear-gradient(125deg,#163c54ef,#173044f5);border:1px solid #78e6ef60;display:flex;align-items:center;gap:13px;z-index:3}
+  .number{flex:none;font-size:clamp(22px,4vw,36px);font-weight:900;color:#ffd789}
+  .copy strong{display:block;font-size:clamp(15px,2.5vw,22px);line-height:1.1}.copy span{display:block;color:#cae6ed;font-size:clamp(10px,1.65vw,14px);line-height:1.25;margin-top:4px}
+  .play{margin-left:auto;flex:none;border:1px solid #8de7f4;background:#153d52;color:white;border-radius:50%;width:39px;height:39px;cursor:pointer;font-size:17px}
+  .footer{position:absolute;top:10.2%;right:6%;font-size:10px;color:#c0dce6;opacity:.8}
+  @media(max-width:520px){.poster{border-radius:14px}.label{font-size:18px}.hint{font-size:15px}.info{padding:8px 10px}.play{width:30px;height:30px;font-size:13px}.footer{display:none}}
+  @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<main class="poster" aria-label="Animated diagram of how a common cold spreads and affects the upper airway">
+  <header><div class="eyebrow">THE COMMON COLD · VISUAL EXPLAINER</div><h1>How humans<br>catch a cold</h1><p>Follow a respiratory virus from exposure to symptoms.</p></header>
+  <div class="footer">Illustrative anatomy · not to scale</div>
+  <svg viewBox="0 0 750 650" role="img" aria-labelledby="svgtitle svgdesc">
+    <title id="svgtitle">Cold virus entering the nasal airway</title>
+    <desc id="svgdesc">A person in profile receives respiratory particles; a magnified inset shows nasal lining cells, viral replication, and immune cells.</desc>
+    <defs>
+      <linearGradient id="skin" x2="1" y2="1"><stop stop-color="#ffcbb0"/><stop offset=".55" stop-color="#e88887"/><stop offset="1" stop-color="#9b4771"/></linearGradient>
+      <radialGradient id="cell"><stop stop-color="#f6a1a9"/><stop offset=".65" stop-color="#c65b83"/><stop offset="1" stop-color="#823663"/></radialGradient>
+      <radialGradient id="scope"><stop stop-color="#743658"/><stop offset=".78" stop-color="#3a2b55"/><stop offset="1" stop-color="#182840"/></radialGradient>
+      <filter id="shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="9"/><feOffset dy="8"/><feComponentTransfer><feFuncA type="linear" slope=".45"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="blueGlow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <clipPath id="scopeClip"><circle cx="493" cy="367" r="162"/></clipPath>
+    </defs>
+    <!-- Anatomical profile and nasal passage -->
+    <path class="skin" d="M35 540 Q27 455 66 402 Q89 371 98 333 Q84 274 117 220 Q145 177 205 170 Q269 171 305 230 Q322 260 321 286 L352 330 Q358 341 343 346 L316 354 Q315 377 295 391 Q315 419 302 459 L278 495 Q266 532 285 593 L128 620 Q111 557 35 540Z"/>
+    <path class="airway" d="M349 340 Q328 345 302 344 Q274 350 251 337 Q226 324 195 330 Q164 334 151 355 Q151 373 177 383 Q219 393 255 376 Q274 367 291 374 Q285 402 269 419 Q246 451 248 491 Q247 531 255 568 L279 574 Q267 521 272 481 Q277 450 298 424 Q324 387 311 361Z"/>
+    <path class="mucosa" d="M174 351 Q201 339 229 352 Q260 367 296 354"/>
+    <path d="M295 402 Q323 407 337 425" fill="none" stroke="#ffabc0" stroke-width="5" opacity=".7"/>
+    <circle cx="280" cy="309" r="5" fill="#28374a"/><path d="M269 394q17 9 30 0" fill="none" stroke="#713550" stroke-width="3"/>
+    <text class="label" x="54" y="202">NOSE + THROAT</text><path class="leader" d="M195 209 L220 284"/>
+    <path class="leader" d="M260 357 Q333 345 351 346 L366 348"/>
+    <!-- Magnified tissue scene -->
+    <circle cx="493" cy="367" r="169" fill="#0b1d31" stroke="#72d5df" stroke-width="4" filter="url(#shadow)"/>
+    <circle cx="493" cy="367" r="162" fill="url(#scope)"/>
+    <g clip-path="url(#scopeClip)">
+      <path d="M315 447 Q386 423 451 447 Q522 469 579 439 Q643 418 676 445 L681 567 L317 567Z" fill="#6e3357" stroke="#f5a0a0" stroke-width="4"/>
+      <path class="cilia" d="M345 438q-8-23 1-34m15 29q-3-26 8-36m15 32q0-23 14-35m21 35q-4-22 9-33m20 39q0-24 13-35m17 42q-2-26 15-36m14 38q0-25 15-40m16 34q1-25 18-41m20 35q3-23 19-36m20 28q0-21 16-31"/>
+      <ellipse class="cell" cx="383" cy="486" rx="38" ry="44"/><ellipse class="cell" cx="456" cy="502" rx="39" ry="45"/><ellipse class="cell" cx="532" cy="494" rx="40" ry="47"/><ellipse class="cell" cx="607" cy="479" rx="41" ry="47"/>
+      <circle cx="384" cy="483" r="14" fill="#663361"/><circle cx="456" cy="500" r="15" fill="#663361"/><circle cx="533" cy="493" r="15" fill="#663361"/><circle cx="606" cy="475" r="15" fill="#663361"/>
+      <ellipse id="infected" cx="456" cy="502" rx="38" ry="44" fill="#ff5f9c" opacity="0"/>
+      <g id="virusLayer"></g><g id="immuneLayer"></g>
+    </g>
+    <circle class="halo" id="entryHalo" cx="320" cy="345" r="43"/><circle class="halo" id="cellHalo" cx="456" cy="488" r="57"/>
+    <text class="label" x="374" y="236">MAGNIFIED NASAL LINING</text>
+    <text class="hint" x="458" y="584">airway cells · cilia · mucus</text>
+    <g class="focus" id="symptoms"><path d="M581 130q18-34 34 0q-1 20-17 24q-17-5-17-24Z" fill="#86e7f7"/><path d="M642 143q13-26 27 0q0 18-13 20q-13-3-14-20Z" fill="#86e7f7"/><text class="label" x="525" y="190">RUNNY NOSE</text></g>
+    <g class="focus" id="exposure"><path d="M37 310 Q122 292 220 319" class="leader"/><text class="label" x="22" y="278">INHALED PARTICLES</text></g>
+  </svg>
+  <nav class="stagebar" aria-label="Choose a stage">
+    <button data-stage="0" class="active">01<br>Exposure</button><button data-stage="1">02<br>Entry</button><button data-stage="2">03<br>Infection</button><button data-stage="3">04<br>Response</button>
+  </nav>
+  <section class="info" aria-live="polite">
+    <div class="number" id="stepNumber">01</div>
+    <div class="copy"><strong id="stepTitle">Exposure</strong><span id="stepText">A person breathes in virus-containing respiratory particles from someone with a cold.</span></div>
+    <button class="play" id="playButton" title="Pause animation" aria-label="Pause animation">Ⅱ</button>
+  </section>
+</main>
+<script>
+(() => {
+  const NS='http://www.w3.org/2000/svg';
+  const stages=[
+    ['Exposure','A person breathes in virus-containing respiratory particles from someone with a cold.'],
+    ['Entry','The virus reaches the nose or mouth and contacts the moist upper-airway lining.'],
+    ['Infection','The virus enters lining cells and makes copies, which can spread to nearby cells.'],
+    ['Response','The immune response causes inflammation, mucus, sneezing and a sore throat.']
+  ];
+  const layer=document.getElementById('virusLayer'), immuneLayer=document.getElementById('immuneLayer');
+  const btns=[...document.querySelectorAll('[data-stage]')];
+  let stage=0,playing=true,last=0,elapsed=0;
+  const rand=(a,b)=>a+Math.random()*(b-a);
+  function makeVirus(x,y,s=1){
+    const g=document.createElementNS(NS,'g');g.setAttribute('class','virus');
+    for(let i=0;i<10;i++){const a=i*Math.PI/5, line=document.createElementNS(NS,'line');
+      line.setAttribute('x1',Math.cos(a)*7);line.setAttribute('y1',Math.sin(a)*7);
+      line.setAttribute('x2',Math.cos(a)*13);line.setAttribute('y2',Math.sin(a)*13);g.append(line);
+      const tip=document.createElementNS(NS,'circle');tip.setAttribute('class','tip');tip.setAttribute('cx',Math.cos(a)*14);tip.setAttribute('cy',Math.sin(a)*14);tip.setAttribute('r',2.4);g.append(tip)}
+    const core=document.createElementNS(NS,'circle');core.setAttribute('class','core');core.setAttribute('r',8);g.append(core);
+    g.setAttribute('transform',`translate(${x} ${y}) scale(${s})`);return g;
+  }
+  function makeImmune(x,y){
+    const g=document.createElementNS(NS,'g');g.setAttribute('class','immune');const c=document.createElementNS(NS,'circle');c.setAttribute('r',21);g.append(c);
+    const p=document.createElementNS(NS,'path');p.setAttribute('d','M-9-2q5-13 10-3q12-5 9 7q-7 12-18 4');g.append(p);
+    g.setAttribute('transform',`translate(${x} ${y})`);return g;
+  }
+  function setStage(n){
+    stage=n;elapsed=0;btns.forEach((b,i)=>{b.classList.toggle('active',i===stage);b.setAttribute('aria-current',i===stage?'step':'false')});
+    document.getElementById('stepNumber').textContent=String(n+1).padStart(2,'0');
+    document.getElementById('stepTitle').textContent=stages[n][0];
+    document.getElementById('stepText').textContent=stages[n][1];
+    document.getElementById('exposure').classList.toggle('active',n===0);
+    document.getElementById('symptoms').classList.toggle('active',n===3);
+    document.getElementById('entryHalo').classList.toggle('active',n===1);
+    document.getElementById('cellHalo').classList.toggle('active',n===2);
+    document.getElementById('infected').setAttribute('opacity',n>=2?'.37':'0');
+    layer.replaceChildren();immuneLayer.replaceChildren();
+    if(n===0||n===1){for(let i=0;i<10;i++) layer.append(makeVirus(rand(380,620),rand(266,409),rand(.45,.85)))}
+    if(n===2){for(let i=0;i<13;i++)layer.append(makeVirus(rand(422,491),rand(446,523),rand(.35,.58)))}
+    if(n===3){for(let i=0;i<9;i++)layer.append(makeVirus(rand(398,610),rand(300,433),rand(.4,.7)));immuneLayer.append(makeImmune(549,364),makeImmune(613,396))}
+  }
+  btns.forEach(b=>b.addEventListener('click',()=>setStage(Number(b.dataset.stage))));
+  document.getElementById('playButton').addEventListener('click',e=>{playing=!playing;e.currentTarget.textContent=playing?'Ⅱ':'▶';e.currentTarget.setAttribute('aria-label',playing?'Pause animation':'Play animation');e.currentTarget.title=playing?'Pause animation':'Play animation'});
+  function animate(t){
+    const dt=Math.min(t-last,50);last=t;
+    if(playing){
+      elapsed+=dt;if(elapsed>5600)setStage((stage+1)%4);
+      [...layer.children].forEach((g,i)=>{
+        const phase=t*.0007+i*1.7;
+        let x,y;
+        if(stage===0){x=90+(elapsed/5600)*240+(i%4)*12;y=285+(i%5)*13+Math.sin(phase)*8}
+        else if(stage===1){x=320+(elapsed/5600)*128+(i%4)*12;y=344+(i%5)*8+Math.sin(phase)*6}
+        else if(stage===2){x=455+Math.sin(phase+i)*((elapsed/5600)*64+8);y=485+Math.cos(phase*1.3+i*2)*((elapsed/5600)*55+6)}
+        else{x=400+(i*27)%210+Math.sin(phase)*9;y=315+(i*19)%100+Math.cos(phase)*6}
+        g.setAttribute('transform',`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${stage===2?.55:.7}) rotate(${(t*.025+i*31)%360})`);
+      });
+      [...immuneLayer.children].forEach((g,i)=>g.setAttribute('transform',`translate(${(549+i*64+Math.sin(t*.001+i)*12).toFixed(1)} ${(364+i*32+Math.cos(t*.0014+i)*12).toFixed(1)})`));
+    }
+    requestAnimationFrame(animate);
+  }
+  setStage(0);requestAnimationFrame(animate);
+})();
+</script>
+</body>
+</html>
